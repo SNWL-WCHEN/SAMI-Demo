@@ -1,6 +1,6 @@
 # SAMI — North-Star Interface
 
-### ▶ [View the live prototype](https://snwl-wchen.github.io/SAMI_Demo/)
+### ▶ [View the live prototype](https://snwl-wchen.github.io/SAMI-Demo/)
 
 A north-star design for an AI assistant in a security operations platform, built to answer a hard question: what should it feel like when an autonomous system is doing real work on your behalf?
 
