@@ -1902,6 +1902,9 @@ html, body { height: 100%; overflow: hidden; }
 .demo-spotlight-cutout{position:absolute;border-radius:10px;box-shadow:0 0 0 9999px rgba(0,0,0,0.5);border:2px solid var(--orange);animation:spotPulse 2s ease-in-out infinite;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);}
 @keyframes spotPulse{0%,100%{box-shadow:0 0 0 9999px rgba(0,0,0,0.5),0 0 0 4px rgba(249,115,22,0.3)}50%{box-shadow:0 0 0 9999px rgba(0,0,0,0.5),0 0 0 8px rgba(249,115,22,0.15)}}
 
+
+#demoReopenBtn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249,115,22,0.5); }
+
 </style>
 </head>
 <body>
@@ -4080,6 +4083,7 @@ function resetDemoV3(){
   document.getElementById('demoSpotlightV3').classList.remove('visible');
   document.getElementById('demoTooltipV3').classList.remove('visible');
   document.getElementById('demoSplashV3').style.display='flex';
+  document.getElementById('demoReopenBtn').style.display='none';
   clearSpotlightV3();
   var sp=document.querySelector('.sami-panel'); if(sp) sp.classList.remove('open');
 }
@@ -4230,6 +4234,38 @@ function spotlightElementV3(selector){
 }
 
 function clearSpotlightV3(){var c=document.getElementById('dv3Cutout');if(c)c.style.display='none';}
+
+
+
+/* ── Demo dismiss / reopen ── */
+function dismissDemo() {
+  // Hide tooltip and spotlight but keep state so they can resume
+  document.getElementById('demoTooltipV3').classList.remove('visible');
+  document.getElementById('demoSpotlightV3').classList.remove('visible');
+  document.getElementById('demoDotsV3').classList.remove('visible');
+  clearSpotlightV3();
+  // Show reopen button
+  var btn = document.getElementById('demoReopenBtn');
+  btn.style.display = 'flex';
+}
+
+function reopenDemo() {
+  // Hide reopen button
+  document.getElementById('demoReopenBtn').style.display = 'none';
+  // If demo was active, resume from current step
+  if (dv3Active) {
+    document.getElementById('demoDotsV3').classList.add('visible');
+    if (dv3Mode === 'internal') {
+      renderInternalStep();
+    } else {
+      document.getElementById('demoSpotlightV3').classList.add('visible');
+      renderStepV3();
+    }
+  } else {
+    // Show splash again
+    document.getElementById('demoSplashV3').style.display = 'flex';
+  }
+}
 
 </script>
 
@@ -4762,7 +4798,10 @@ function clearSpotlightV3(){var c=document.getElementById('dv3Cutout');if(c)c.st
   <button class="demo-dots-reset" onclick="resetDemoV3()">Reset</button>
 </div>
 <div id="demoTooltipV3" class="demo-tooltip">
-  <div id="dv3StepNum" class="demo-tt-step">Step 1 of 12</div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+    <div id="dv3StepNum" class="demo-tt-step" style="margin-bottom:0;">Step 1 of 12</div>
+    <button onclick="dismissDemo()" title="Dismiss guide" style="border:none;background:transparent;cursor:pointer;font-size:16px;color:#9CA3AF;line-height:1;padding:0;margin-left:8px;">✕</button>
+  </div>
   <div id="dv3Title" class="demo-tt-title">Loading...</div>
   <div id="dv3Point" class="demo-tt-point">Loading...</div>
   <div class="demo-tt-say">
@@ -4777,6 +4816,16 @@ function clearSpotlightV3(){var c=document.getElementById('dv3Cutout');if(c)c.st
 </div>
 <div id="demoSpotlightV3" class="demo-spotlight-mask">
   <div id="dv3Cutout" class="demo-spotlight-cutout" style="display:none;"></div>
+</div>
+
+
+<!-- Floating guide reopen button -->
+<div id="demoReopenBtn" onclick="reopenDemo()" style="display:none;position:fixed;bottom:24px;right:24px;z-index:9500;
+  background:var(--orange);color:white;border:none;border-radius:50px;
+  padding:10px 18px;font-family:var(--font);font-size:13px;font-weight:700;
+  cursor:pointer;box-shadow:0 4px 16px rgba(249,115,22,0.4);
+  display:none;align-items:center;gap:7px;transition:all 0.2s;">
+  ✦ Guide
 </div>
 
 </body></html>
