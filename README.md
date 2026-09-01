@@ -32,8 +32,3 @@ I built this as a working prototype to pressure-test the interaction model befor
 
 ---
 
-### Other work
-
-- [Unified API Hub](https://snwl-wchen.github.io/API-hub/) — developer portal for partner API access
-- [Claude Skills Library](https://snwl-wchen.github.io/Skills-Library/) — AI instruction library for product teams
-- [Dark Mode UUIF](https://snwl-wchen.github.io/UM-Dark-Mode/) — design system dark mode implementation
